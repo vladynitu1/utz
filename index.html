@@ -999,6 +999,22 @@ async function init(){
   });
 }
 init();
+
+// De fiecare dată când aplicația este deschisă/redeschisă (inclusiv din fundal, ca PWA),
+// se duce automat pe luna și anul curente.
+function jumpToToday(){
+  const now=new Date();
+  curYear=now.getFullYear(); curM=now.getMonth();
+  document.getElementById('yrBadge').textContent='📅 '+curYear;
+  renderTabs(); renderTable();
+}
+document.addEventListener('visibilitychange', function(){
+  if(document.visibilityState==='visible') jumpToToday();
+});
+window.addEventListener('pageshow', function(e){
+  if(e.persisted) jumpToToday();
+});
+window.addEventListener('focus', jumpToToday);
 </script>
 </body>
 </html>
